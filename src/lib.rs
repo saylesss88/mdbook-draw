@@ -1,3 +1,6 @@
+pub mod config;
+
+use config::DrawConfig;
 use mdbook_preprocessor::book::{Book, BookItem};
 use mdbook_preprocessor::errors::Error;
 use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
