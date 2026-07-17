@@ -1,0 +1,26 @@
+[package]
+name = "mdbook-draw"
+version = "0.1.0"
+edition = "2024"
+authors = ["T. Sawyer saylesss88@github.com"]
+license = "Apache-2.0"
+description = "An mdBook preprocessor for interactive drawing/diagram canvas blocks"
+repository = "https://github.com/saylesss88/mdbook-draw"
+readme = "README.md"
+keywords = ["mdbook", "draw", "canvas", "diagram", "preprocessor"]
+
+[dependencies]
+anyhow = {version = "1.0.103", default-features = false}
+clap = {version = "4.6.2", features = ["derive"]}
+env_logger = {version = "0.11.11", default-features = false}
+mdbook-preprocessor = "0.5.4"
+semver = "1.0.28"
+serde = "1.0.228"
+serde_json = "1.0.150"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
