@@ -109,6 +109,8 @@ fn render_draw_html(content: &str) -> String {
     html.push_str("<input type=\"color\" data-role=\"color\" value=\"#000000\" title=\"Color\">");
     html.push_str("<input type=\"range\" data-role=\"size\" min=\"1\" max=\"30\" value=\"4\" title=\"Brush size\">");
     html.push_str("<button data-tool=\"clear\">🗑️ Clear</button>");
+    html.push_str("<button data-role=\"save\">💾 Save</button>");
+    html.push_str("<button data-role=\"export-png\">🖼️ Export PNG</button>");
     html.push_str("</div>\n");
     html.push_str("</div>\n");
 

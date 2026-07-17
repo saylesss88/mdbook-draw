@@ -40,7 +40,7 @@ mdbook-draw init
 
 This will:
 
-1. Create `theme/draw.js` — the canvas drawing UI
+1. Create `theme/draw.js`, the canvas drawing UI
 2. Add `additional-js = ["theme/draw.js"]` to `[output.html]` in `book.toml`
 3. Add the `[preprocessor.draw]` section to `book.toml`
 

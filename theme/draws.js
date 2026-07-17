@@ -46,26 +46,29 @@
         return false;
       }
     }
-    // Fill canvas with background color on init
+
+    // --- Init: fill background, then restore saved drawing if any ---
+
     ctx.fillStyle = canvas.getAttribute("data-background") || "#ffffff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     loadFromStorage();
 
     // --- Toolbar wiring ---
+
     toolbar.querySelectorAll("button[data-tool]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var t = btn.getAttribute("data-tool");
         if (t === "clear") {
           ctx.fillStyle = canvas.getAttribute("data-background") || "#ffffff";
           ctx.fillRect(0, 0, canvas.width, canvas.height);
+          // Clear also wipes the saved state
           try { localStorage.removeItem(storageKey); } catch (e) {}
         } else {
           tool = t;
-        } 
+        }
       });
     });
 
-    
     // Save button
     var saveBtn = toolbar.querySelector("button[data-role='save']");
     if (saveBtn) {
@@ -101,14 +104,15 @@
     }
 
     // --- Drawing events ---
+
     function getPos(e) {
       var rect = canvas.getBoundingClientRect();
       var scaleX = canvas.width / rect.width;
       var scaleY = canvas.height / rect.height;
       return {
         x: (e.clientX - rect.left) * scaleX,
-        y: (e.clientY - rect.top) * scaleY,
-      }
+        y: (e.clientY - rect.top)  * scaleY,
+      };
     }
 
     canvas.addEventListener("mousedown", function (e) {
@@ -136,9 +140,9 @@
       ctx.stroke();
     });
 
-    canvas.addEventListener("mouseup",    function () {
-       drawing = false;
-       saveToStorage();  // Auto-save after every stroke
+    canvas.addEventListener("mouseup", function () {
+      drawing = false;
+      saveToStorage(); // Auto-save after every stroke
     });
 
     canvas.addEventListener("mouseleave", function () { drawing = false; });
