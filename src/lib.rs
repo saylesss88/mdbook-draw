@@ -39,7 +39,9 @@ fn rewrite_chapter(input: &str) -> String {
 
     for line in input.lines() {
         if in_block {
-            if line.trim_start().starts_with("```") {
+            // Closing fence: line is ONLY backticks (trimmed), nothing else after
+            let trimmed = line.trim();
+            if trimmed == "```" {
                 // End of the draw block. Render it
                 out.push_str(&render_draw_html(&buf));
                 in_block = false;
@@ -48,12 +50,15 @@ fn rewrite_chapter(input: &str) -> String {
                 buf.push_str(line);
                 buf.push('\n');
             }
-        } else if line.trim_start().starts_with("```draw") {
-            in_block = true;
-            buf.clear();
         } else {
-            out.push_str(line);
-            out.push('\n');
+            let trimmed = line.trim_start();
+            if trimmed == "```draw" || trimmed.starts_with("```draw") {
+                in_block = true;
+                buf.clear();
+            } else {
+                out.push_str(line);
+                out.push('\n');
+            }
         }
     }
 
@@ -78,10 +83,6 @@ fn render_draw_html(content: &str) -> String {
     // Optional title above the canvas
     if !cfg.title.is_empty() {
         let _ = writeln!(html, "  <p class=\"mdbook-draw-title\">{}</p>\n", cfg.title);
-        // html.push_str(&format!(
-        //     "  <p class=\"mdbook-draw-title\">{}</p>\n",
-        //     cfg.title
-        // ));
     }
 
     // The canvas element itself, JS reads data-* to configure it
@@ -101,10 +102,6 @@ fn render_draw_html(content: &str) -> String {
         "  <div class=\"mdbook-draw-toolbar\" data-canvas-id=\"{}\">\n",
         cfg.id
     );
-    // html.push_str(&format!(
-    //     "  <div class=\"mdbook-draw-toolbar\" data-canvas-id=\"{}\">\n",
-    //     cfg.id
-    // ));
     html.push_str("    <button data-tool=\"pencil\">✏️ Pencil</button>\n");
     html.push_str("    <button data-tool=\"eraser\">🧹 Eraser</button>\n");
     html.push_str(
