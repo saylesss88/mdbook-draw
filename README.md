@@ -36,7 +36,7 @@ id: my-diagram
 width: 600
 height: 400
 title: My Diagram
-background: #f8f9fa
+background: #ffcccc
 ```
 ````
 
