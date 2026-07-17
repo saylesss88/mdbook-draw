@@ -6,6 +6,24 @@ interactive freehand drawing canvases to your book pages.
 Write a fenced `draw` block in any chapter, and it becomes a live canvas your
 readers can draw on: pencil, eraser, color picker, brush size, and clear.
 
+## Features
+
+- ✏️ **Freehand pencil**: smooth, round-capped strokes with configurable color
+  and brush size
+- 🧹 **Eraser**: erase strokes by painting with the canvas background color
+- 🎨 **Color picker**: choose any stroke color inline
+- 📏 **Brush size slider**: adjust pen/eraser width from 1 to 30 px
+- 🗑️ **Clear**: reset the entire canvas in one click
+- 💾 **Auto-save**: drawings are automatically persisted to `localStorage` after
+  every stroke and restored when you return to the page
+- 🖼️ **Export PNG**: download any canvas as a `.png` file with one click
+- 🔢 **Multiple canvases per page**: each block is independently identified,
+  saved, and restored by its `id`
+- ⚡ **Zero dependencies**: pure HTML5 Canvas + vanilla JS, no external
+  libraries
+- 🦀 **Rust preprocessor**: fast, compile-time processing; `draw.js` is embedded
+  in the binary and deployed via `mdbook-draw init`
+
 ## Demo
 
 <p align="center">
@@ -77,17 +95,19 @@ background: #f8f9fa
 
 ## Toolbar
 
-| Control      | Description                          |
-| :----------- | :----------------------------------- |
-| ✏️ Pencil    | Frehand drawing (default tool)       |
-| 🧹 Eraser    | Erase strokes (paints with bg color) |
-| Color picker | Choose stroke color                  |
-| Size slider  | Adjust brush/eraser size             |
-| 🗑️ Clear     | Reset the entire canvas              |
+| Control              | Description                                   |
+| :------------------- | :-------------------------------------------- |
+| ✏️ Pencil            | Frehand drawing (default tool)                |
+| 🧹 Eraser            | Erase strokes (paints with bg color)          |
+| Color picker         | Choose stroke color                           |
+| Size slider          | Adjust brush/eraser size                      |
+| 🗑️ Clear             | Reset the entire canvas                       |
+| 💾 Save button       | manually triggers a save + shows confirmation |
+| 🖼️ Export PNG button | downloads the canvas as a `.png` file         |
 
 ## How it works
 
-- Rust preprocessor (src/lib.rs): scans markdown for ```draw fenced blocks,
+- Rust preprocessor (`src/lib.rs`): scans markdown for ```draw fenced blocks,
   parses the key-value config, and replaces them with raw HTML `<canvas>`
   elements and toolbar `<div>`s
 - JavaScript (`theme/draw.js`): runs at page load, finds every canvas by its
