@@ -8,35 +8,55 @@
   var toolbars = document.querySelectorAll(".mdbook-draw-toolbar");
 
   toolbars.forEach(function (toolbar) {
-    var canvasId = toolbar.getAttribute("data-canvas-id");
-    var canvas   = document.getElementById(canvasId);
+    var canvasId   = toolbar.getAttribute("data-canvas-id");
+    var canvas     = document.getElementById(canvasId);
 
     if (!canvas) {
       console.warn("mdbook-draw: canvas not found for id:", canvasId);
       return;
     }
 
-    var ctx       = canvas.getContext("2d");
-    var drawing   = false;
-    var tool      = "pencil";
-    var color     = "#000000";
-    var brushSize = 4;
+    var ctx        = canvas.getContext("2d");
+    var drawing    = false;
+    var tool       = "pencil";
+    var color      = "#000000";
+    var brushSize  = 4;
+    var background = canvas.getAttribute("data-background") || "#ffffff";
     var storageKey = STORAGE_PREFIX + canvasId;
+    var bgKey      = STORAGE_PREFIX + canvasId + ":bg";
 
     // --- Persistence helpers ---
 
     function saveToStorage() {
       try {
         localStorage.setItem(storageKey, canvas.toDataURL("image/png"));
+        localStorage.setItem(bgKey, background);
       } catch (e) {
         console.warn("mdbook-draw: could not save to localStorage:", e);
       }
     }
 
+    function clearStorage() {
+      try {
+        localStorage.removeItem(storageKey);
+        localStorage.removeItem(bgKey);
+      } catch (e) {}
+    }
+
     function loadFromStorage() {
       try {
-        var saved = localStorage.getItem(storageKey);
+        var savedBg = localStorage.getItem(bgKey);
+        var saved   = localStorage.getItem(storageKey);
+
         if (!saved) return false;
+
+        // If the background color changed since the save was made,
+        // discard the stale save so the new background takes effect.
+        if (savedBg !== background) {
+          clearStorage();
+          return false;
+        }
+
         var img = new Image();
         img.onload = function () { ctx.drawImage(img, 0, 0); };
         img.src = saved;
@@ -49,7 +69,7 @@
 
     // --- Init: fill background, then restore saved drawing if any ---
 
-    ctx.fillStyle = canvas.getAttribute("data-background") || "#ffffff";
+    ctx.fillStyle = background;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     loadFromStorage();
 
@@ -59,10 +79,9 @@
       btn.addEventListener("click", function () {
         var t = btn.getAttribute("data-tool");
         if (t === "clear") {
-          ctx.fillStyle = canvas.getAttribute("data-background") || "#ffffff";
+          ctx.fillStyle = background;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
-          // Clear also wipes the saved state
-          try { localStorage.removeItem(storageKey); } catch (e) {}
+          clearStorage();
         } else {
           tool = t;
         }
@@ -127,7 +146,7 @@
       var pos = getPos(e);
 
       if (tool === "eraser") {
-        ctx.strokeStyle = canvas.getAttribute("data-background") || "#ffffff";
+        ctx.strokeStyle = background;
         ctx.lineWidth   = brushSize * 3;
       } else {
         ctx.strokeStyle = color;
