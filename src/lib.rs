@@ -84,7 +84,7 @@ fn render_draw_html(content: &str) -> String {
 
     // Optional title above the canvas
     if !cfg.title.is_empty() {
-        let _ = writeln!(html, "<p class=\"mdbook-draw-title\">{}</p>\n", cfg.title);
+        let _ = writeln!(html, "<p class=\"mdbook-draw-title\">{}</p>", cfg.title);
     }
 
     // The canvas element itself, JS reads data-* to configure it
@@ -101,16 +101,15 @@ fn render_draw_html(content: &str) -> String {
     // Toolbar: pencil/eraser/clear (JS will wire these up)
     let _ = writeln!(
         html,
-        "<div class=\"mdbook-draw-toolbar\" data-canvas-id=\"{}\">\n",
+        "<div class=\"mdbook-draw-toolbar\" data-canvas-id=\"{}\">",
         cfg.id
     );
-    html.push_str("<button data-tool=\"pencil\">✏️ Pencil</button>\n");
-    html.push_str("<button data-tool=\"eraser\">🧹 Eraser</button>\n");
-    html.push_str("<input type=\"color\" data-role=\"color\" value=\"#000000\" title=\"Color\">\n");
-    html.push_str("<input type=\"range\" data-role=\"size\" min=\"1\" max=\"30\" value=\"4\" title=\"Brush size\">\n");
-    html.push_str("<button data-tool=\"clear\">🗑️ Clear</button>\n");
+    html.push_str("<button data-tool=\"pencil\">✏️ Pencil</button>");
+    html.push_str("<button data-tool=\"eraser\">🧹 Eraser</button>");
+    html.push_str("<input type=\"color\" data-role=\"color\" value=\"#000000\" title=\"Color\">");
+    html.push_str("<input type=\"range\" data-role=\"size\" min=\"1\" max=\"30\" value=\"4\" title=\"Brush size\">");
+    html.push_str("<button data-tool=\"clear\">🗑️ Clear</button>");
     html.push_str("</div>\n");
-
     html.push_str("</div>\n");
 
     // Trailing blank line, closes the raw HTML block for the md parser
