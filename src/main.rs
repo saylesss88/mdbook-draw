@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use mdbook_preprocessor::book::Book;
-use mdbook_preprocessor::{parse_input, Preprocessor, PreprocessorContext};
+use mdbook_preprocessor::{Preprocessor, PreprocessorContext, parse_input};
 use std::{fs, io, path::Path};
 
 use mdbook_draw::Draw;
