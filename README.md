@@ -27,7 +27,7 @@ readers can draw on: pencil, eraser, color picker, brush size, and clear.
 ## Demo
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/saylesss88/mdbook-draw/main/assets/mdbook-draw.png" width="600" alt="mdbook-draw example">
+  <img src="https://raw.githubusercontent.com/saylesss88/mdbook-draw/main/assets/mdbook-draw2.png" width="600" alt="mdbook-draw example">
 </p>
 
 ````markdown
