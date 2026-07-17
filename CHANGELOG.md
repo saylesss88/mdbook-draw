@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Save Button/ Export PNG Button
 - Auto-save/Auto-restore
 
+### Fixed
+
+- Non-working bg color, changes in `draw.js`
+
 ## [0.1.0] - 2026-07-17
 
 ### Added
