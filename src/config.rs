@@ -8,7 +8,7 @@ pub struct DrawConfig {
 }
 
 impl DrawConfig {
-    fn from_block(content: &str) -> Self {
+    pub fn from_block(content: &str) -> Self {
         let mut id = "draw-canvas".to_string();
         let mut width = 600u32;
         let mut height = 400u32;
