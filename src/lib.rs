@@ -4,16 +4,12 @@ use config::DrawConfig;
 use mdbook_preprocessor::book::{Book, BookItem};
 use mdbook_preprocessor::errors::Error;
 use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
+use std::fmt::Write as _;
 
+#[allow(clippy::doc_markdown)]
 /// The mdbook-draw preprocessor.
 /// Finds fenced ```draw blocks and replaces them with canvas HTML.
 pub struct Draw;
-
-impl Draw {
-    pub fn new() -> Self {
-        Self
-    }
-}
 
 impl Preprocessor for Draw {
     fn name(&self) -> &'static str {
@@ -34,6 +30,7 @@ impl Preprocessor for Draw {
     }
 }
 
+#[allow(clippy::doc_markdown)]
 /// Walk all lines of a chapter and replace ```draw blocks with HTML.
 fn rewrite_chapter(input: &str) -> String {
     let mut out = String::new();
@@ -80,27 +77,34 @@ fn render_draw_html(content: &str) -> String {
 
     // Optional title above the canvas
     if !cfg.title.is_empty() {
-        html.push_str(&format!(
-            "  <p class=\"mdbook-draw-title\">{}</p>\n",
-            cfg.title
-        ));
+        let _ = writeln!(html, "  <p class=\"mdbook-draw-title\">{}</p>\n", cfg.title);
+        // html.push_str(&format!(
+        //     "  <p class=\"mdbook-draw-title\">{}</p>\n",
+        //     cfg.title
+        // ));
     }
 
-    // The canvas element itself — JS reads data-* to configure it
-    html.push_str(&format!(
+    // The canvas element itself, JS reads data-* to configure it
+    let _ = write!(
+        html,
         "  <canvas\n    id=\"{}\"\n    class=\"mdbook-draw-canvas\"\n    \
-         width=\"{}\"\n    height=\"{}\"\n    \
-         data-background=\"{}\"\n    \
-         style=\"border:1px solid #ccc; cursor:crosshair; \
-                background:{};\">\n  </canvas>\n",
+          width=\"{}\"\n    height=\"{}\"\n    \
+          data-background=\"{}\"\n    \
+          style=\"border:1px solid #ccc; cursor:crosshair; \
+                 background:{};\">\n  </canvas>\n",
         cfg.id, cfg.width, cfg.height, cfg.background, cfg.background
-    ));
+    );
 
-    // Toolbar — pencil/eraser/clear (JS will wire these up)
-    html.push_str(&format!(
+    // Toolbar: pencil/eraser/clear (JS will wire these up)
+    let _ = writeln!(
+        html,
         "  <div class=\"mdbook-draw-toolbar\" data-canvas-id=\"{}\">\n",
         cfg.id
-    ));
+    );
+    // html.push_str(&format!(
+    //     "  <div class=\"mdbook-draw-toolbar\" data-canvas-id=\"{}\">\n",
+    //     cfg.id
+    // ));
     html.push_str("    <button data-tool=\"pencil\">✏️ Pencil</button>\n");
     html.push_str("    <button data-tool=\"eraser\">🧹 Eraser</button>\n");
     html.push_str(

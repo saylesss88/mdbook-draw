@@ -27,7 +27,7 @@ fn main() -> Result<()> {
     match cli.command {
         Some(Commands::Supports { renderer }) => {
             let supported = Draw.supports_renderer(&renderer).unwrap_or(false);
-            std::process::exit(if supported { 0 } else { 1 });
+            std::process::exit(i32::from(!supported));
         }
         // Default: act as mdBook preprocessor, read JSON from stdin
         None => {
