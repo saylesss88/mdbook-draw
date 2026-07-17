@@ -52,7 +52,12 @@
     // --- Drawing events ---
     function getPos(e) {
       var rect = canvas.getBoundingClientRect();
-      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      var scaleX = canvas.width / rect.width;
+      var scaleY = canvas.height / rect.height;
+      return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY,
+      }
     }
 
     canvas.addEventListener("mousedown", function (e) {
