@@ -60,15 +60,15 @@ fn handle_init() -> Result<()> {
     fs::write(&js_path, DRAW_JS).context("Failed to write theme/draw.js")?;
     println!("✅ Created theme/draw.js");
 
-    // 3. Patch book.toml — add additional-js if not already present
+    // 3. Patch book.toml, add additional-js if not already present
     let toml_path = Path::new("book.toml");
     if toml_path.exists() {
         let content = fs::read_to_string(toml_path)?;
 
         if content.contains("draw.js") {
-            println!("ℹ️  book.toml already references draw.js — skipping.");
+            println!("ℹ️  book.toml already references draw.js... skipping.");
         } else if content.contains("[output.html]") {
-            // Section exists — append our line inside it
+            // Section exists, append our line inside it
             let patched = content.replace(
                 "[output.html]",
                 "[output.html]\nadditional-js = [\"theme/draw.js\"]",
@@ -76,7 +76,7 @@ fn handle_init() -> Result<()> {
             fs::write(toml_path, patched)?;
             println!("✅ Added additional-js to [output.html] in book.toml");
         } else {
-            // No [output.html] section — append the whole block
+            // No [output.html] section, append the whole block
             let mut patched = content;
             patched.push_str("\n[output.html]\nadditional-js = [\"theme/draw.js\"]\n");
             fs::write(toml_path, patched)?;

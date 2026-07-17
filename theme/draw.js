@@ -1,4 +1,4 @@
-// draw.js — mdbook-draw canvas initializer
+// draw.js: mdbook-draw canvas initializer
 // mdBook injects additional-js scripts at the bottom of <body>, so the DOM
 // is fully parsed by the time this runs. No event listener needed.
 
