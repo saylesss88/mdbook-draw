@@ -4,7 +4,7 @@ use crate::init::handle_init;
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 use mdbook_preprocessor::book::Book;
-use mdbook_preprocessor::{Preprocessor, PreprocessorContext, parse_input};
+use mdbook_preprocessor::{parse_input, Preprocessor, PreprocessorContext};
 use std::io;
 
 use mdbook_draw::Draw;

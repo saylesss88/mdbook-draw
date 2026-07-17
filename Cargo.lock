@@ -202,7 +202,6 @@ dependencies = [
  "env_logger",
  "mdbook-preprocessor",
  "semver",
- "serde",
  "serde_json",
 ]
 
