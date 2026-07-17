@@ -62,38 +62,46 @@ fn handle_init() -> Result<()> {
 
     // 3. Patch book.toml, add additional-js if not already present
     let toml_path = Path::new("book.toml");
+
     if toml_path.exists() {
         let content = fs::read_to_string(toml_path)?;
+        let mut patched = content.clone();
 
-        if content.contains("draw.js") {
-            println!("ℹ️  book.toml already references draw.js... skipping.");
-        } else if content.contains("[output.html]") {
-            // Section exists, append our line inside it
-            let patched = content.replace(
+        // --- [preprocessor.draw] ---
+        if content.contains("[preprocessor.draw]") {
+            println!("ℹ️  book.toml already has [preprocessor.draw] — skipping.");
+        } else {
+            patched.push_str("\n[preprocessor.draw]\ncommand = \"mdbook-draw\"\n");
+            println!("✅ Added [preprocessor.draw] to book.toml");
+        }
+
+        // --- [output.html] additional-js ---
+        if patched.contains("draw.js") {
+            println!("ℹ️  book.toml already references draw.js — skipping.");
+        } else if patched.contains("[output.html]") {
+            // Section exists — insert our line right after the header
+            patched = patched.replace(
                 "[output.html]",
                 "[output.html]\nadditional-js = [\"theme/draw.js\"]",
             );
-            fs::write(toml_path, patched)?;
             println!("✅ Added additional-js to [output.html] in book.toml");
         } else {
-            // No [output.html] section, append the whole block
-            let mut patched = content;
             patched.push_str("\n[output.html]\nadditional-js = [\"theme/draw.js\"]\n");
-            fs::write(toml_path, patched)?;
             println!("✅ Added [output.html] section to book.toml");
         }
+
+        fs::write(toml_path, patched)?;
     } else {
         println!("⚠️  book.toml not found. Are you in your book's root directory?");
-        println!("   Manually add this to book.toml:");
+        println!("   Manually add to book.toml:");
+        println!("   [preprocessor.draw]");
+        println!("   command = \"mdbook-draw\"");
+        println!();
         println!("   [output.html]");
         println!("   additional-js = [\"theme/draw.js\"]");
     }
 
-    // 4. Remind user to add the preprocessor line too
-    println!("\n🚀 Done! Also make sure book.toml has:");
-    println!("   [preprocessor.draw]");
-    println!("   command = \"mdbook-draw\"");
-    println!("\nThen run: mdbook build");
+    println!("\n🚀 Done! Run: mdbook build");
 
     Ok(())
 }
