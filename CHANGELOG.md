@@ -12,6 +12,7 @@ and this project adheres to
 
 ### Added
 
+- Unit tests for lib
 - Add text
 - Drag line/Drag circle
 - Save Button/ Export PNG Button
