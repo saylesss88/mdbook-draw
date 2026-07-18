@@ -185,6 +185,18 @@
     canvas.addEventListener("mousedown", function (e) {
       drawing = true;
       startPos = getPos(e);
+      if (tool === "text") {
+        var pos = getPos(e);
+        var text = prompt("Enter text:");
+        if (text) {
+          ctx.fillStyle = color;
+          ctx.font = brushSize * 4 + "px sans-serif";
+          ctx.fillText(text, pos.x, pos.y);
+          saveToStorage();
+        }
+        drawing = false;
+        return;
+      }
       if (isShapeTool(tool)) {
         snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
       } else {

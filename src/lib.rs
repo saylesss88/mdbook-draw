@@ -107,6 +107,7 @@ fn render_draw_html(content: &str) -> String {
     html.push_str("<button data-tool=\"pencil\">✏️ Pencil</button>");
     html.push_str("<button data-tool=\"line\">╱ Line</button>");
     html.push_str("<button data-tool=\"circle\">○ Circle</button>");
+    html.push_str("<button data-tool=\"text\">T Text</button>");
     html.push_str("<button data-tool=\"eraser\">🧹 Eraser</button>");
     html.push_str("<input type=\"color\" data-role=\"color\" value=\"#000000\" title=\"Color\">");
     html.push_str("<input type=\"range\" data-role=\"size\" min=\"1\" max=\"30\" value=\"4\" title=\"Brush size\">");
