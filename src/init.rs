@@ -34,20 +34,30 @@ pub fn handle_init() -> Result<()> {
         }
 
         // --- [output.html] additional-js ---
+
         if patched.contains("draw.js") {
             println!("ℹ️  book.toml already references draw.js — skipping.");
+        } else if patched.contains("additional-js") {
+            // Key exists, append "theme/draw.js" into the existing array
+            // Handles both `["a", "b"]` and `["a", "b",]` (trailing comma)
+            patched = patched.replacen(
+                "additional-js = [",
+                "additional-js = [\"theme/draw.js\", ",
+                1,
+            );
+            println!("✅ Appended draw.js to existing additional-js in book.toml");
         } else if patched.contains("[output.html]") {
-            // Section exists — insert our line right after the header
-            patched = patched.replace(
+            // Section exists but no additional-js key yet
+            patched = patched.replacen(
                 "[output.html]",
                 "[output.html]\nadditional-js = [\"theme/draw.js\"]",
+                1,
             );
             println!("✅ Added additional-js to [output.html] in book.toml");
         } else {
             patched.push_str("\n[output.html]\nadditional-js = [\"theme/draw.js\"]\n");
             println!("✅ Added [output.html] section to book.toml");
         }
-
         fs::write(toml_path, patched)?;
     } else {
         println!("⚠️  book.toml not found. Are you in your book's root directory?");
