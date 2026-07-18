@@ -121,6 +121,7 @@
     toolbar.querySelectorAll("button[data-tool]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var t = btn.getAttribute("data-tool");
+        console.log("tool selected:", t);
         if (t === "clear") {
           ctx.fillStyle = background;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
