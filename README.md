@@ -11,7 +11,8 @@ readers can draw on: pencil, eraser, color picker, brush size, and clear.
 - ✏️ **Freehand pencil**: smooth, round-capped strokes with configurable color
   and brush size
 - ╱ **Drag line**: click and drag for straight lines
-- ○ **Drag circle**: drag perfect circles.
+- ○ **Drag circle**: drag perfect circles
+- T **Text injection**: Click to type within canvas
 - 🧹 **Eraser**: erase strokes by painting with the canvas background color
 - 🎨 **Color picker**: choose any stroke color inline
 - 📏 **Brush size slider**: adjust pen/eraser width from 1 to 30 px
@@ -70,6 +71,11 @@ Then build or serve your book as normal:
 mdbook serve --open
 ```
 
+> [!NOTE]
+> If you already have a `draw.js` from previous versions, after an update,
+> delete your previous `theme/draw.js` from your book, and re-run 
+> `mdbook-draw init` to get the updated `draw.js`.
+
 ## Draw block syntax
 
 All fields are optional and have sensible defaults:
@@ -97,17 +103,18 @@ background: #f8f9fa
 
 ## Toolbar
 
-| Control              | Description                                   |
-| :------------------- | :-------------------------------------------- |
-| ✏️ Pencil            | Freehand drawing (default tool)               |
-| ╱ Line               | Drag straight lines                           |
-| ○ Circle             | Drag perfect circles                          |
-| 🧹 Eraser            | Erase strokes (paints with bg color)          |
-| Color picker         | Choose stroke color                           |
-| Size slider          | Adjust brush/eraser size                      |
-| 🗑️ Clear             | Reset the entire canvas                       |
-| 💾 Save button       | manually triggers a save + shows confirmation |
-| 🖼️ Export PNG button | downloads the canvas as a `.png` file         |
+| Control              | Description                                    |
+| :------------------- | :--------------------------------------------- |
+| ✏️ Pencil            | Freehand drawing (default tool)                |
+| ╱ Line               | Drag straight lines                            |
+| ○ Circle             | Drag perfect circles                           |
+| T Text               | Click to type within canvas, drag bar for size |
+| 🧹 Eraser            | Erase strokes (paints with bg color)           |
+| Color picker         | Choose stroke color                            |
+| Size slider          | Adjust brush/eraser size                       |
+| 🗑️ Clear             | Reset the entire canvas                        |
+| 💾 Save button       | manually triggers a save + shows confirmation  |
+| 🖼️ Export PNG button | downloads the canvas as a `.png` file          |
 
 ## How it works
 
