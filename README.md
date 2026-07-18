@@ -10,6 +10,8 @@ readers can draw on: pencil, eraser, color picker, brush size, and clear.
 
 - ✏️ **Freehand pencil**: smooth, round-capped strokes with configurable color
   and brush size
+- ╱ **Drag line**: click and drag for straight lines
+- ○ **Drag circle**: drag perfect circles.
 - 🧹 **Eraser**: erase strokes by painting with the canvas background color
 - 🎨 **Color picker**: choose any stroke color inline
 - 📏 **Brush size slider**: adjust pen/eraser width from 1 to 30 px
@@ -97,7 +99,9 @@ background: #f8f9fa
 
 | Control              | Description                                   |
 | :------------------- | :-------------------------------------------- |
-| ✏️ Pencil            | Frehand drawing (default tool)                |
+| ✏️ Pencil            | Freehand drawing (default tool)               |
+| ╱ Line               | Drag straight lines                           |
+| ○ Circle             | Drag perfect circles                          |
 | 🧹 Eraser            | Erase strokes (paints with bg color)          |
 | Color picker         | Choose stroke color                           |
 | Size slider          | Adjust brush/eraser size                      |
